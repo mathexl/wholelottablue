@@ -266,7 +266,6 @@
       this.source = source;
       this.volume = volume;
       this.loop = loop;
-      var son;
       this.son = son;
       this.finish = false;
       this.stop = function () {
@@ -274,7 +273,7 @@
       };
       this.start = function () {
         if (this.finish) return false;
-        this.son = document.createElement("embed");
+        this.son = document.createElement("audio");
         this.son.setAttribute("src", this.source);
         this.son.setAttribute("hidden", "true");
         this.son.setAttribute("volume", this.volume);
@@ -285,6 +284,11 @@
       this.remove = function () {
         document.body.removeChild(this.son);
         this.finish = true;
+      };
+      this.load = function () {
+        console.log('load', this.son);
+
+        this.son.load();
       };
       this.init = function (volume, loop) {
         this.finish = false;
@@ -348,6 +352,8 @@
           }
           this.songName = s.name;
           this.song = new Sound(s.src, 100, true);
+          console.log(this.song);
+          this.song.load();
           this.song.start();
         },
         stop: function () {
