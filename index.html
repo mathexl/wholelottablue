@@ -181,6 +181,8 @@
         the night. While there were other tracks we wanted to include, we wanted
         to keep the project as brief as possible and only include
         close-to-finished material. <br /><br />
+        To avoid self-hosting copyrighted material, we embedded Spotify links of the actual WLR songs (rearranged). You 
+        may need to open the track on your app, however, to get a full listen. 
         We hope Playboi Carti still enjoyed his release and finds time to spend
         with his son, Onyx. Peace.
       </div>
@@ -192,7 +194,7 @@
         <iframe
           v-if="typeof song === 'string'"
           v-bind:src="song"
-          width="400"
+          width="333"
           height="380"
           frameborder="0"
           allowtransparency="true"
@@ -220,7 +222,7 @@
       <div class="cover">
         <iframe
           src="https://open.spotify.com/embed/track/7zLMYtNJcabv4h4wBnjNQI"
-          width="400"
+          width="333"
           height="380"
           frameborder="0"
           allowtransparency="true"
@@ -236,7 +238,7 @@
         <iframe
           v-if="typeof song === 'string'"
           v-bind:src="song"
-          width="400"
+          width="333"
           height="380"
           frameborder="0"
           allowtransparency="true"
@@ -266,6 +268,7 @@
       this.source = source;
       this.volume = volume;
       this.loop = loop;
+      var son;
       this.son = son;
       this.finish = false;
       this.stop = function () {
@@ -277,19 +280,16 @@
         this.son.setAttribute("src", this.source);
         this.son.setAttribute("hidden", "true");
         this.son.setAttribute("volume", this.volume);
-        this.son.setAttribute("autostart", "true");
         this.son.setAttribute("loop", this.loop);
         document.body.appendChild(this.son);
+        this.son.load();
+        this.son.play();
       };
       this.remove = function () {
         document.body.removeChild(this.son);
         this.finish = true;
       };
-      this.load = function () {
-        console.log('load', this.son);
 
-        this.son.load();
-      };
       this.init = function (volume, loop) {
         this.finish = false;
         this.volume = volume;
@@ -353,7 +353,6 @@
           this.songName = s.name;
           this.song = new Sound(s.src, 100, true);
           console.log(this.song);
-          this.song.load();
           this.song.start();
         },
         stop: function () {
