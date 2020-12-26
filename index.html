@@ -1,0 +1,347 @@
+<head>
+  <title>Whole Lotta Blue</title>
+  <script
+    src="https://kit.fontawesome.com/a62818a9ca.js"
+    crossorigin="anonymous"
+  ></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+  <style>
+    body {
+      margin: 0px;
+      padding: 0px;
+      background: black;
+    }
+
+    @font-face {
+      font-family: "spotify-circular-book";
+      src: url("./circular-book.woff") format("woff");
+    }
+
+    @font-face {
+      font-family: "spotify-circular-medium";
+      src: url("./circular-medium.woff") format("woff");
+    }
+    .col1 {
+      width: 333px;
+      min-height: 100vh;
+      float: left;
+      max-width: 100vw;
+    }
+
+    .blueCover {
+      width: 333px;
+      max-width: 100vw;
+      display: inline-block;
+    }
+
+    .blueCover > img {
+      width: 333px;
+      max-width: 100vw;
+    }
+    .description {
+      color: white;
+      font-family: "spotify-circular-book", "CircularSpotifyTxT-Bold",
+        "spotify-circular", Helvetica, Arial;
+      padding: 10px;
+      box-sizing: border-box;
+      display: inline-block;
+    }
+
+    .description > a {
+      color: white;
+    }
+
+    .side {
+      float: left;
+      margin-bottom: 3px;
+    }
+    .sideTitle {
+      background: #9c0d0d;
+      filter: hue-rotate(195deg);
+      color: white;
+      font-family: "spotify-circular-book", "CircularSpotifyTxT-Bold",
+        "spotify-circular", Helvetica, Arial;
+      text-align: center;
+      font-size: 11px;
+      padding-top: 14px;
+      height: 30px;
+    }
+    .intermission .metamorphosis {
+      width: 333px;
+      max-width: 100vw;
+      filter: hue-rotate(905deg);
+      opacity: 0.4;
+    }
+    .cover {
+      width: 333px;
+      max-width: 100vw;
+      height: 80px;
+      overflow: hidden;
+      filter: hue-rotate(195deg);
+      position: relative;
+    }
+    .cover > .trackNumber {
+      position: absolute;
+      font-family: "spotify-circular-book", "CircularSpotifyTxT-Bold",
+        "spotify-circular", Helvetica, Arial;
+      color: white;
+      top: 4px;
+      left: 4px;
+      z-index: 10;
+    }
+    .fakeSpotify {
+      background: #9c0d0d;
+      color: white;
+      height: 80px;
+      width: 333px;
+      max-width: 100vw;
+      font-family: "spotify-circular-book", "CircularSpotifyTxT-Bold",
+        "spotify-circular", Helvetica, Arial;
+    }
+    .fakeSpotify > .playButtonContainer {
+      height: 80px;
+      width: 80px;
+      float: left;
+      padding: 20px;
+      padding-left: 23px;
+      box-sizing: border-box;
+    }
+
+    .fakeSpotify > .playButtonContainer > .playButton {
+      width: 40px;
+      height: 40px;
+      border-radius: 100%;
+      border: 1px white solid;
+      background: #400a0a;
+      color: white;
+      text-align: center;
+      padding-top: 11px;
+      box-sizing: border-box;
+      font-size: 18px;
+      padding-left: 2px;
+      cursor: pointer;
+    }
+
+    .fakeSpotify > .rest {
+      height: 80px;
+      width: calc(100% - 80px);
+      float: left;
+    }
+
+    .fakeSpotify > .rest > .title {
+      padding-left: 10px;
+      box-sizing: border-box;
+      font-weight: 600;
+      font-size: 14px;
+      margin-top: 8px;
+      font-family: "spotify-circular-medium";
+    }
+
+    .fakeSpotify > .rest > .artist {
+      padding-left: 10px;
+      box-sizing: border-box;
+      font-weight: 400;
+      font-size: 14px;
+      margin-top: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div id="wholelottablue">
+    <div class="col1">
+      <div class="blueCover">
+        <img src="cover.png" />
+      </div>
+      <div class="description">
+        In our opinion, Whole Lotta Red had a lot of great material. But it was
+        badly ordered (no offense Kanye) and needed some substitutions. Curated
+        by
+        <a href="https://twitter.com/didjesusdrop">@didjesusdrop</a>, here is
+        our take on Whole Lotta Red, titled Whole Lotta Blue. <br /><br />
+        Whole Lotta Red tried to do two things - provide music that was an
+        evolution of the sounds of Die Lit, and introduce a new genre that we
+        call Punk Rap. We broke the Album into two sides to cater to this, Side
+        A (The Day) and Side B (The Night). In the middle is the Metamorphosis,
+        where Carti wakes from his daylight slumber and emerges as the vamp in
+        the night. While there were other tracks we wanted to include, we wanted
+        to keep the project as brief as possible and only include
+        close-to-finished material. <br /><br />
+        We hope Playboi Carti still enjoyed his release and finds time to spend
+        with his son, Onyx. Peace.
+      </div>
+    </div>
+    <div class="side sideA">
+      <div class="sideTitle">SIDE A - THE DAY</div>
+      <div class="cover" v-for="(song, sindex) in sideA">
+        <div class="trackNumber">{{sindex + 1}}</div>
+        <iframe
+          v-if="typeof song === 'string'"
+          v-bind:src="song"
+          width="400"
+          height="380"
+          frameborder="0"
+          allowtransparency="true"
+          allow="encrypted-media"
+        ></iframe>
+        <div v-else class="fakeSpotify">
+          <div class="playButtonContainer">
+            <div
+              class="playButton"
+              v-on:click="songName != song.name ? play(song) : stop()"
+            >
+              <i v-if="songName != song.name" class="fa fa-play"></i>
+              <i v-else style="margin-left: -1.5px" class="fa fa-stop"></i>
+            </div>
+          </div>
+          <div class="rest">
+            <div class="title">{{song.name}}</div>
+            <div class="artist">{{song.artist}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="side intermission">
+      <div class="sideTitle">INTERMISSION - METAMORPHOSIS</div>
+      <div class="cover">
+        <iframe
+          src="https://open.spotify.com/embed/track/7zLMYtNJcabv4h4wBnjNQI"
+          width="400"
+          height="380"
+          frameborder="0"
+          allowtransparency="true"
+          allow="encrypted-media"
+        ></iframe>
+      </div>
+      <img src="./metamorphosis.jpg" class="metamorphosis" />
+    </div>
+    <div class="side sideB">
+      <div class="sideTitle">SIDE B - THE NIGHT</div>
+      <div class="cover" v-for="(song, sindex) in sideB">
+        <div class="trackNumber">{{sindex + 1}}</div>
+        <iframe
+          v-if="typeof song === 'string'"
+          v-bind:src="song"
+          width="400"
+          height="380"
+          frameborder="0"
+          allowtransparency="true"
+          allow="encrypted-media"
+        ></iframe>
+        <div v-else class="fakeSpotify">
+          <div class="playButtonContainer">
+            <div
+              class="playButton"
+              v-on:click="songName != song.name ? play(song) : stop()"
+            >
+              <i v-if="songName != song.name" class="fa fa-play"></i>
+              <i v-else style="margin-left: -1.5px" class="fa fa-stop"></i>
+            </div>
+          </div>
+          <div class="rest">
+            <div class="title">{{song.name}}</div>
+            <div class="artist">{{song.artist}}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // source: https://stackoverflow.com/a/11331200/4298200
+    function Sound(source, volume, loop) {
+      this.source = source;
+      this.volume = volume;
+      this.loop = loop;
+      var son;
+      this.son = son;
+      this.finish = false;
+      this.stop = function () {
+        document.body.removeChild(this.son);
+      };
+      this.start = function () {
+        if (this.finish) return false;
+        this.son = document.createElement("embed");
+        this.son.setAttribute("src", this.source);
+        this.son.setAttribute("hidden", "true");
+        this.son.setAttribute("volume", this.volume);
+        this.son.setAttribute("autostart", "true");
+        this.son.setAttribute("loop", this.loop);
+        document.body.appendChild(this.son);
+      };
+      this.remove = function () {
+        document.body.removeChild(this.son);
+        this.finish = true;
+      };
+      this.init = function (volume, loop) {
+        this.finish = false;
+        this.volume = volume;
+        this.loop = loop;
+      };
+    }
+
+    new Vue({
+      el: "#wholelottablue",
+      data: {
+        song: null,
+        songName: "",
+        sideA: [
+          "https://open.spotify.com/embed/track/78YTl0P96kBCBXUSzKoqAm",
+          {
+            src: "molly.mp3",
+            name: "Molly (reprod. Forgotten)",
+            artist: "Playboi Carti",
+          },
+          {
+            src: "kidcudi.mp3",
+            name: "kid cudi (ft. Young Nudy)",
+            artist: "Playboi Carti",
+          },
+          "https://open.spotify.com/embed/track/03rcC8SVxCa9UdY5qgkITe",
+          "https://open.spotify.com/embed/track/08dz3ygXyFur6bL7Au8u8J",
+          "https://open.spotify.com/embed/track/29TPjc8wxfz4XMn21O7VsZ",
+          "https://open.spotify.com/embed/track/2iqHcRoOfLl1fXCf1bGO0J",
+          "https://open.spotify.com/embed/track/7ejepEh5DJ79YI6owGRfkk",
+          "https://open.spotify.com/embed/track/1eMNW1HQjF1dbb4GtnmpaX",
+          "https://open.spotify.com/embed/track/1xVVYE1ahLotRpppJViVzs",
+          {
+            src: "moon.mp3",
+            name: "Go2DaMoon ft. Kanye West (Forgotten Rework)",
+            artist: "Playboi Carti",
+          },
+        ],
+        sideB: [
+          "https://open.spotify.com/embed/track/3cWmqvMwVQKDigWLSZ3w9h",
+          "https://open.spotify.com/embed/track/5uYqmEN6TAAE8ss8YmprNV",
+          "https://open.spotify.com/embed/track/4txKMpsSfZRV6durPuHVq0",
+          {
+            src: "skeleton.mp3",
+            name: "Skeleton",
+            artist: "Playboi Carti",
+          },
+          "https://open.spotify.com/embed/track/5fSZXFOZfPVW9gvnnG4ZVW",
+          "https://open.spotify.com/embed/track/3dl8bSF08LQfCf4T6CCksf",
+          "https://open.spotify.com/embed/track/1Bg2CNZw6S4e9cGWPmi0uI",
+          "https://open.spotify.com/embed/track/15JRvf02KKGHKgC31jrpuh",
+          "https://open.spotify.com/embed/track/2lLG56qpLP3UbcLuzMvkWX",
+          "https://open.spotify.com/embed/track/2iqHcRoOfLl1fXCf1bGO0J",
+        ],
+      },
+      methods: {
+        play: function (s) {
+          console.log("playing ", s.src);
+          if (this.song) {
+            this.song.stop();
+          }
+          this.songName = s.name;
+          this.song = new Sound(s.src, 100, true);
+          this.song.start();
+        },
+        stop: function () {
+          this.song.stop();
+          this.song = null;
+          this.songName = "";
+        },
+      },
+    });
+  </script>
+</body>
